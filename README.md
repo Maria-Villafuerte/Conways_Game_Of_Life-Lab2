@@ -1,10 +1,10 @@
 # Conway's Game of Life - Lab 2
 
-Este proyecto implementa el Juego de la Vida de Conway en Rust. El Juego de la Vida es un autómata celular desarrollado por el matemático John Conway. Es un juego de cero jugadores, lo que significa que su evolución está determinada por su estado inicial, sin necesidad de más entradas. 
+Este labortorio implementa el Juego de "la Vida de Conway" en Rust. El Juego de la Vida es un autómata celular desarrollado por el matemático John Conway. Es un juego de cero jugadores, lo que significa que su evolución está determinada por su estado inicial, sin necesidad de más entradas. 
 
 ## Descripción
 
-En este proyecto, se ha utilizado Rust para implementar el Juego de la Vida, usando un framebuffer para representar el estado de la cuadrícula en la pantalla. Se han incluido varios patrones predefinidos que se pueden posicionar en cualquier lugar del tablero.
+En este trabajo, se ha utilizado Rust para implementar el Juego de la Vida, usando un framebuffer para representar el estado de la cuadrícula en la pantalla. Se han incluido varios patrones predefinidos que se pueden posicionar en cualquier lugar del tablero.
 
 ### Características
 
@@ -35,3 +35,18 @@ cargo run
 Aquí puedes ver una demostración en funcionamiento:
 
 ![Demo GIF](./lab2-Graficas.gif)
+
+Para esta demostración si utilizó una pantalla de 100*100 y el siguiente código:
+ 
+```rust
+    ten_cell_row(framebuffer, 5, 0);
+    ten_cell_row(framebuffer, 15, 0);
+    ten_cell_row(framebuffer, 25, 0);
+    ten_cell_row(framebuffer, 35, 0);
+    ten_cell_row(framebuffer, 45, 0);
+    ten_cell_row(framebuffer, 55, 0);
+    ten_cell_row(framebuffer, 65, 0);
+    ten_cell_row(framebuffer, 75, 0);
+    ten_cell_row(framebuffer, 85, 0);
+    ten_cell_row(framebuffer, 95, 0);
+```
