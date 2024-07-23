@@ -1,45 +1,64 @@
 // framebuffer.rs
+#[derive(Clone)]
 pub struct Framebuffer {
-  pub width: usize,
-  pub height: usize,
-  pub buffer: Vec<u32>, // Hacemos el buffer público
-  pub background_color: u32,
-  pub current_color: u32,
+    width: usize,
+    height: usize,
+    buffer: Vec<u32>,
+    background_color: u32,
+    current_color: u32,
 }
 
 impl Framebuffer {
-  // Crea un nuevo framebuffer con el tamaño dado
-  pub fn new(width: usize, height: usize) -> Self {
-      Self {
-          width,
-          height,
-          buffer: vec![0; width * height],
-          background_color: 0x000000, // Negro por defecto
-          current_color: 0xFFFFFF, // Blanco por defecto
-      }
-  }
+    pub fn new(width: usize, height: usize) -> Self {
+        let buffer = vec![0x333355; width * height]; // Color de fondo predeterminado
+        let background_color = 0x333355;
+        let current_color = 0xFFDDDD;
+        Framebuffer { width, height, buffer, background_color, current_color }
+    }
 
-  // Establece el color de fondo
-  pub fn set_background_color(&mut self, color: u32) {
-      self.background_color = color;
-  }
+    pub fn get_color_at(&self, x: usize, y: usize) -> Option<u32> {
+        if x < self.width && y < self.height {
+            let index = y * self.width + x;
+            Some(self.buffer[index])
+        } else {
+            None
+        }
+    }
 
-  // Establece el color actual para dibujar
-  pub fn set_current_color(&mut self, color: u32) {
-      self.current_color = color;
-  }
+    pub fn set_current_color(&mut self, color: u32) {
+        self.current_color = color;
+    }
 
-  // Limpia el framebuffer con el color de fondo
-  pub fn clear(&mut self) {
-      for pixel in &mut self.buffer {
-          *pixel = self.background_color;
-      }
-  }
+    pub fn set_color(&mut self, x: usize, y: usize, color: u32) {
+        if x < self.width && y < self.height {
+            let index = y * self.width + x;
+            self.buffer[index] = color;
+        }
+    }
 
-  // Dibuja un punto en el framebuffer
-  pub fn point(&mut self, x: usize, y: usize) {
-      if x < self.width && y < self.height {
-          self.buffer[y * self.width + x] = self.current_color;
-      }
-  }
+    pub fn get(&self, x: usize, y: usize) -> u32 {
+        if x < self.width && y < self.height {
+            let index = y * self.width + x;
+            self.buffer[index]
+        } else {
+            self.background_color // Color de fondo predeterminado si está fuera de los límites
+        }
+    }
+
+    pub fn set_background_color(&mut self, color: u32) {
+        self.buffer.fill(color);
+    }
+
+    pub fn clear(&mut self) {
+        self.set_background_color(self.background_color);
+    }
+
+    pub fn point(&mut self, x: usize, y: usize) {
+        self.set_color(x, y, self.current_color);
+    }
+
+    pub fn get_buffer(&self) -> &[u32] {
+        &self.buffer
+    }
 }
+
